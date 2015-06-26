@@ -1,5 +1,6 @@
 UBUNTU_BOXES= precise quantal raring saucy trusty
 DEBIAN_BOXES= squeeze wheezy sid jessie
+FEDORA_BOXES= 22
 CENTOS_BOXES= 6
 TODAY=$(shell date -u +"%Y-%m-%d")
 
@@ -12,6 +13,7 @@ all: ubuntu debian
 
 ubuntu: $(UBUNTU_BOXES)
 debian: $(DEBIAN_BOXES)
+fedora: $(FEDORA_BOXES)
 centos: $(CENTOS_BOXES)
 
 # REFACTOR: Figure out how can we reduce duplicated code
@@ -36,6 +38,13 @@ $(CENTOS_BOXES):
 	@sudo -E ./mk-centos.sh $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
 	@sudo chmod +rw $(PACKAGE)
 	@sudo chown ${USER}: $(PACKAGE)
+$(FEDORA_BOXES): CONTAINER = "vagrant-base-fedora-${@}-$(ARCH)"
+$(FEDORA_BOXES): PACKAGE = "output/${TODAY}/vagrant-lxc-fedora-${@}-$(ARCH).box"
+$(FEDORA_BOXES):
+	@mkdir -p $$(dirname $(PACKAGE))
+	@sudo -E ./mk-fedora.sh $(@) $(shell uname -m) $(CONTAINER) $(PACKAGE)
+	@sudo chmod +rw $(PACKAGE)
+	@sudo chown ${USER}: $(PACKAGE)
 
 acceptance: CONTAINER = "vagrant-base-acceptance-$(ARCH)"
 acceptance: PACKAGE = "output/${TODAY}/vagrant-lxc-acceptance-$(ARCH).box"
@@ -51,7 +60,7 @@ release:
 	git tag $(version)
 	git push && git push --tags
 
-clean: ALL_BOXES = ${DEBIAN_BOXES} ${UBUNTU_BOXES} ${CENTOS_BOXES} acceptance
+clean: ALL_BOXES = ${DEBIAN_BOXES} ${UBUNTU_BOXES} ${CENTOS_BOXES} ${FEDORA_BOXES} acceptance
 clean:
 	@for r in $(ALL_BOXES); do \
 		sudo -E ./clean.sh $${r}\
