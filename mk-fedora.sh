@@ -36,7 +36,6 @@ mkdir -p ${WORKING_DIR}
 info "Building box to '${PACKAGE}'..."
 
 ./common/download.sh ${DISTRIBUTION} ${RELEASE} ${ARCH} ${CONTAINER}
-# ./fedora/vagrant-lxc-fixes.sh ${DISTRIBUTION} ${RELEASE} ${ARCH} ${CONTAINER}
 ./fedora/install-extras.sh ${CONTAINER}
 ./common/prepare-vagrant-user.sh ${DISTRIBUTION} ${CONTAINER}
 ./fedora/clean.sh ${CONTAINER}

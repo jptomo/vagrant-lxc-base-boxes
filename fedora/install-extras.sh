@@ -13,8 +13,8 @@ utils.lxc.start
 log 'Sleeping for 10 seconds...'
 sleep 10
 
-utils.lxc.attach yum update -y
+utils.lxc.attach dnf update -y
 
 # TODO: Support for appending to this list from outside
-PACKAGES=(vim curl wget man-db bash-completion python-software-properties ca-certificates sudo nfs-common)
-utils.lxc.attach yum install ${PACKAGES[*]} -y
+PACKAGES=(vim curl wget man-db bash-completion ca-certificates sudo nfs-utils)
+utils.lxc.attach dnf install ${PACKAGES[*]} -y

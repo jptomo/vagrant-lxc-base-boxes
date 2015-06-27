@@ -38,8 +38,8 @@ $(CENTOS_BOXES):
 	@sudo -E ./mk-centos.sh $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
 	@sudo chmod +rw $(PACKAGE)
 	@sudo chown ${USER}: $(PACKAGE)
-$(FEDORA_BOXES): CONTAINER = "vagrant-base-fedora-${@}-$(ARCH)"
-$(FEDORA_BOXES): PACKAGE = "output/${TODAY}/vagrant-lxc-fedora-${@}-$(ARCH).box"
+$(FEDORA_BOXES): CONTAINER = "vagrant-base-fedora-${@}-$(shell uname -m)"
+$(FEDORA_BOXES): PACKAGE = "output/${TODAY}/vagrant-lxc-fedora-${@}-$(shell uname -m).box"
 $(FEDORA_BOXES):
 	@mkdir -p $$(dirname $(PACKAGE))
 	@sudo -E ./mk-fedora.sh $(@) $(shell uname -m) $(CONTAINER) $(PACKAGE)

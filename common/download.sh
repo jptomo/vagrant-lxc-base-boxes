@@ -35,7 +35,7 @@ elif [ $RELEASE = 'squeeze' ] || [ $RELEASE = 'wheezy' ]; then
                    --release ${RELEASE} \
                    --arch ${ARCH}
 elif [ $RELEASE = '22' ] ; then
-  utils.lxc.create -t fedora -- \
+  utils.lxc.create -t fedora-dnf -- \
                    --release ${RELEASE} \
                    --arch ${ARCH}
 else
