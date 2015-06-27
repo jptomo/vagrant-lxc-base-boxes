@@ -30,6 +30,11 @@ if [ -f ${PACKAGE} ]; then
   exit
 fi
 
+if [ ! -f /usr/share/lxc/templates/lxc-fedora-dnf ] ; then
+  info "Copy lxc-fedora-dnf to /usr/share/lxc/templates/"
+  sudo cp fedora/lxc-fedora-dnf /usr/share/lxc/templates/
+fi
+
 debug "Creating ${WORKING_DIR}"
 mkdir -p ${WORKING_DIR}
 
